@@ -1,16 +1,13 @@
 {
-  "env": [
-    {
-      "key": "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY",
+  "env": {
+    "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY": {
       "description": "Stripe publishable key"
     },
-    {
-      "key": "STRIPE_SECRET_KEY",
+    "STRIPE_SECRET_KEY": {
       "description": "Stripe secret key"
     },
-    {
-      "key": "STRIPE_WEBHOOK_SECRET",
+    "STRIPE_WEBHOOK_SECRET": {
       "description": "Stripe webhook signing secret"
     }
-  ]
+  }
 }
