@@ -16,10 +16,22 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // Verify stripe key is loaded
+    if (!process.env.STRIPE_SECRET_KEY) {
+      console.error('STRIPE_SECRET_KEY not found in environment')
+      return NextResponse.json(
+        { error: 'Stripe configuration missing' },
+        { status: 500 }
+      )
+    }
+
     // Get the origin from headers, fallback to environment variable or default
     const origin = request.headers.get('origin') || 
-                   request.headers.get('x-forwarded-proto') + '://' + request.headers.get('host') ||
-                   process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://synth-labs-sigma.vercel.app'
+                   (request.headers.get('x-forwarded-proto') ? 
+                    `${request.headers.get('x-forwarded-proto')}://${request.headers.get('host')}` : 
+                    'https://synth-labs-sigma.vercel.app')
+
+    console.log('Checkout request:', { priceId, productId, origin })
 
     const session = await stripe.checkout.sessions.create({
       line_items: [
@@ -35,13 +47,16 @@ export async function POST(request: NextRequest) {
       metadata: {
         productId,
       },
-    } as any)
+    })
 
+    console.log('Session created:', session.id)
     return NextResponse.json({ sessionId: session.id })
   } catch (error) {
     console.error('Checkout error:', error)
+    const errorMsg = error instanceof Error ? error.message : 'Checkout failed'
+    console.error('Error details:', JSON.stringify(error, null, 2))
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Checkout failed' },
+      { error: errorMsg },
       { status: 500 }
     )
   }
