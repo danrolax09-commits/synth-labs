@@ -29,17 +29,16 @@ export async function POST(request: NextRequest) {
 
     console.log('[CHECKOUT] Creating session for', { origin, priceId })
 
+    // Use Payment Links instead of Checkout Sessions - avoids on_behalf_of param issues
     const params = new URLSearchParams()
     params.append('line_items[0][price]', priceId)
     params.append('line_items[0][quantity]', '1')
-    params.append('mode', 'payment')
-    params.append('success_url', `${origin}/thank-you?session_id={CHECKOUT_SESSION_ID}&product=${productId}`)
-    params.append('cancel_url', `${origin}/checkout?product=${productId}`)
-    params.append('metadata[productId]', productId)
+    params.append('after_completion[type]', 'redirect')
+    params.append('after_completion[redirect][url]', `${origin}/thank-you?product=${productId}`)
 
     const auth = Buffer.from(`${secretKey}:`).toString('base64')
 
-    const response = await fetch('https://api.stripe.com/v1/checkout/sessions', {
+    const response = await fetch('https://api.stripe.com/v1/payment_links', {
       method: 'POST',
       headers: {
         'Authorization': `Basic ${auth}`,
@@ -57,10 +56,10 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const session = await response.json() as any
+    const paymentLink = await response.json() as any
 
-    console.log('[CHECKOUT] SUCCESS', { sessionId: session.id })
-    return NextResponse.json({ sessionId: session.id })
+    console.log('[CHECKOUT] SUCCESS', { paymentLink: paymentLink.url })
+    return NextResponse.json({ paymentLink: paymentLink.url })
 
   } catch (error) {
     const msg = error instanceof Error ? error.message : String(error)
