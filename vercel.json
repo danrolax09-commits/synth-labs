@@ -1,13 +1,5 @@
 {
-  "env": {
-    "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY": {
-      "description": "Stripe publishable key"
-    },
-    "STRIPE_SECRET_KEY": {
-      "description": "Stripe secret key"
-    },
-    "STRIPE_WEBHOOK_SECRET": {
-      "description": "Stripe webhook signing secret"
-    }
-  }
+  "buildCommand": "npm run build",
+  "devCommand": "npm run dev",
+  "installCommand": "npm install"
 }
