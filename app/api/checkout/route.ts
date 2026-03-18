@@ -17,7 +17,6 @@ export async function POST(request: NextRequest) {
     }
 
     const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
       line_items: [
         {
           price: priceId,
@@ -27,11 +26,11 @@ export async function POST(request: NextRequest) {
       mode: 'payment',
       success_url: `${request.headers.get('origin')}/thank-you?session_id={CHECKOUT_SESSION_ID}&product=${productId}`,
       cancel_url: `${request.headers.get('origin')}/checkout?product=${productId}`,
-      customer_email_collection: 'required',
+      customer_email: undefined,
       metadata: {
         productId,
       },
-    })
+    } as any)
 
     return NextResponse.json({ sessionId: session.id })
   } catch (error) {
