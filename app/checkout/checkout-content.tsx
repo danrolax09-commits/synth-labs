@@ -2,7 +2,6 @@
 
 import { useSearchParams } from 'next/navigation'
 import { useState } from 'react'
-import { loadStripe } from '@stripe/stripe-js'
 import styles from './checkout.module.css'
 
 const products: Record<string, any> = {
@@ -53,17 +52,14 @@ export default function CheckoutContent() {
         throw new Error('Failed to create checkout session')
       }
 
-      const { sessionId } = await response.json()
-      const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
-
-      if (!stripe) {
-        throw new Error('Failed to load Stripe')
+      const data = await response.json()
+      
+      if (!data.paymentLink) {
+        throw new Error(data.error || 'No payment link returned')
       }
 
-      const { error: stripeError } = await stripe.redirectToCheckout({ sessionId })
-      if (stripeError) {
-        setError(stripeError.message || 'Checkout failed')
-      }
+      // Redirect directly to the payment link
+      window.location.href = data.paymentLink
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred')
     } finally {
