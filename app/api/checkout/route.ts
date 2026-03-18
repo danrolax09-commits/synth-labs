@@ -16,6 +16,11 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // Get the origin from headers, fallback to environment variable or default
+    const origin = request.headers.get('origin') || 
+                   request.headers.get('x-forwarded-proto') + '://' + request.headers.get('host') ||
+                   process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://synth-labs-sigma.vercel.app'
+
     const session = await stripe.checkout.sessions.create({
       line_items: [
         {
@@ -24,8 +29,8 @@ export async function POST(request: NextRequest) {
         },
       ],
       mode: 'payment',
-      success_url: `${request.headers.get('origin')}/thank-you?session_id={CHECKOUT_SESSION_ID}&product=${productId}`,
-      cancel_url: `${request.headers.get('origin')}/checkout?product=${productId}`,
+      success_url: `${origin}/thank-you?session_id={CHECKOUT_SESSION_ID}&product=${productId}`,
+      cancel_url: `${origin}/checkout?product=${productId}`,
       customer_email: undefined,
       metadata: {
         productId,
