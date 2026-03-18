@@ -1,0 +1,306 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(10, 10, 15, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.5rem 2rem;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.logo span {
+  color: var(--accent);
+}
+
+.nav nav {
+  display: flex;
+  gap: 3rem;
+}
+
+.nav a {
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.nav a:hover {
+  color: var(--text);
+}
+
+/* Hero */
+.hero {
+  padding: 8rem 0;
+  text-align: center;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.hero h1 {
+  font-size: 4rem;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero p {
+  font-size: 1.25rem;
+  color: var(--muted);
+  max-width: 600px;
+  margin: 0 auto 2.5rem;
+}
+
+.heroButtons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 0.85rem 2rem;
+  border-radius: 10px;
+  font-weight: 600;
+  display: inline-block;
+  transition: all 0.2s;
+}
+
+.btnPrimary {
+  background: var(--accent);
+  color: #fff;
+}
+
+.btnPrimary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(139, 92, 246, 0.3);
+}
+
+.btnSecondary {
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+}
+
+.btnSecondary:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* Features */
+.features {
+  padding: 6rem 0;
+}
+
+.features h2 {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.grid3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2rem;
+  transition: all 0.2s;
+}
+
+.card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 10px 40px rgba(139, 92, 246, 0.15);
+  transform: translateY(-5px);
+}
+
+.card h3 {
+  margin-bottom: 1rem;
+  color: var(--accent);
+}
+
+.card p {
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* Pricing */
+.pricing {
+  padding: 6rem 0;
+}
+
+.pricing h2 {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.pricingCard {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2.5rem;
+  transition: all 0.2s;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.pricingCard.featured {
+  border-color: var(--accent);
+  box-shadow: 0 0 40px rgba(139, 92, 246, 0.2);
+  transform: scale(1.05);
+}
+
+.pricingCard:hover {
+  border-color: var(--accent);
+  box-shadow: 0 20px 60px rgba(139, 92, 246, 0.2);
+}
+
+.pricingCard h3 {
+  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+}
+
+.description {
+  color: var(--muted);
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+}
+
+.price {
+  display: flex;
+  align-items: baseline;
+  margin-bottom: 1.5rem;
+  gap: 0.25rem;
+}
+
+.currency {
+  font-size: 1.25rem;
+  color: var(--muted);
+}
+
+.amount {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.pricingCard .btn {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.features {
+  list-style: none;
+  flex-grow: 1;
+}
+
+.features li {
+  padding: 0.75rem 0;
+  color: var(--muted);
+  border-bottom: 1px solid var(--border);
+  font-size: 0.95rem;
+}
+
+.features li:last-child {
+  border-bottom: none;
+}
+
+.features li::before {
+  color: var(--accent);
+  margin-right: 0.75rem;
+}
+
+.disclaimer {
+  text-align: center;
+  color: var(--muted);
+  margin-top: 3rem;
+  font-size: 0.95rem;
+}
+
+/* CTA */
+.cta {
+  padding: 6rem 0;
+  background: linear-gradient(135deg, var(--accent-glow), transparent);
+  text-align: center;
+}
+
+.cta h2 {
+  margin-bottom: 1rem;
+}
+
+.cta p {
+  font-size: 1.25rem;
+  color: var(--muted);
+  margin-bottom: 2rem;
+}
+
+/* Footer */
+.footer {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  padding: 2rem 0;
+  text-align: center;
+  color: var(--muted);
+}
+
+.footerLinks {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.footerLinks a {
+  color: var(--muted);
+}
+
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 2.5rem;
+  }
+
+  .heroButtons {
+    flex-direction: column;
+  }
+
+  .btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .pricingCard.featured {
+    transform: scale(1);
+  }
+
+  .nav {
+    padding: 1rem;
+  }
+
+  .nav nav {
+    gap: 1.5rem;
+    font-size: 0.9rem;
+  }
+}

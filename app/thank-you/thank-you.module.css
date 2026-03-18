@@ -1,0 +1,165 @@
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.success,
+.error,
+.loading {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 3rem;
+  text-align: center;
+  width: 100%;
+}
+
+.checkmark {
+  font-size: 4rem;
+  color: #4ade80;
+  margin-bottom: 1rem;
+  animation: scaleIn 0.5s ease-out;
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.success h1 {
+  color: #4ade80;
+  margin-bottom: 1rem;
+}
+
+.success > p {
+  color: var(--muted);
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+}
+
+.error h1 {
+  color: #f87171;
+  margin-bottom: 1rem;
+}
+
+.error p {
+  color: var(--muted);
+  margin-bottom: 2rem;
+}
+
+.loading h1 {
+  margin-bottom: 1rem;
+}
+
+.loading p {
+  color: var(--muted);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.details {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+.details h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 1.25rem;
+}
+
+.details ol {
+  list-style: none;
+  counter-reset: item;
+  padding: 0;
+}
+
+.details li {
+  counter-increment: item;
+  margin-bottom: 1rem;
+  padding-left: 2.5rem;
+  position: relative;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.details li::before {
+  content: counter(item);
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: var(--accent);
+  color: white;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.resources {
+  margin-bottom: 2rem;
+}
+
+.resources h2 {
+  margin-bottom: 1.5rem;
+  font-size: 1.25rem;
+}
+
+.button {
+  display: inline-block;
+  margin: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: var(--accent);
+  color: white;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(139, 92, 246, 0.3);
+}
+
+.guarantee {
+  color: var(--muted);
+  font-size: 0.9rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  margin-top: 1rem;
+}
+
+.link {
+  display: block;
+  color: var(--accent);
+  margin-top: 1rem;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
