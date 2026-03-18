@@ -1,14 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2023-10-16',
-})
-
 export async function POST(request: NextRequest) {
   try {
-    const { priceId, productId } = await request.json()
+    const body = await request.json()
+    const { priceId, productId } = body
 
+    console.log('[CHECKOUT] Request received', { priceId, productId })
+
+    // Validate inputs
     if (!priceId) {
       return NextResponse.json(
         { error: 'Price ID is required' },
@@ -16,23 +16,28 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Verify stripe key is loaded
     if (!process.env.STRIPE_SECRET_KEY) {
-      console.error('STRIPE_SECRET_KEY not found in environment')
+      console.error('[CHECKOUT] STRIPE_SECRET_KEY not found')
       return NextResponse.json(
-        { error: 'Stripe configuration missing' },
+        { error: 'Server configuration error: Missing Stripe key' },
         { status: 500 }
       )
     }
 
-    // Get the origin from headers, fallback to environment variable or default
-    const origin = request.headers.get('origin') || 
-                   (request.headers.get('x-forwarded-proto') ? 
-                    `${request.headers.get('x-forwarded-proto')}://${request.headers.get('host')}` : 
-                    'https://synth-labs-sigma.vercel.app')
+    // Initialize Stripe with explicit configuration
+    console.log('[CHECKOUT] Initializing Stripe')
+    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+      apiVersion: '2023-10-16',
+    })
 
-    console.log('Checkout request:', { priceId, productId, origin })
+    // Get safe origin
+    const protocol = request.headers.get('x-forwarded-proto') || 'https'
+    const host = request.headers.get('host') || request.headers.get('x-forwarded-host') || 'synth-labs-sigma.vercel.app'
+    const origin = `${protocol}://${host}`
 
+    console.log('[CHECKOUT] Creating session', { origin, priceId })
+
+    // Create the checkout session
     const session = await stripe.checkout.sessions.create({
       line_items: [
         {
@@ -43,20 +48,25 @@ export async function POST(request: NextRequest) {
       mode: 'payment',
       success_url: `${origin}/thank-you?session_id={CHECKOUT_SESSION_ID}&product=${productId}`,
       cancel_url: `${origin}/checkout?product=${productId}`,
-      customer_email: undefined,
       metadata: {
         productId,
       },
     })
 
-    console.log('Session created:', session.id)
+    console.log('[CHECKOUT] Session created successfully', { sessionId: session.id })
+
     return NextResponse.json({ sessionId: session.id })
+
   } catch (error) {
-    console.error('Checkout error:', error)
-    const errorMsg = error instanceof Error ? error.message : 'Checkout failed'
-    console.error('Error details:', JSON.stringify(error, null, 2))
+    const errorMessage = error instanceof Error ? error.message : String(error)
+    console.error('[CHECKOUT] Error:', errorMessage)
+    console.error('[CHECKOUT] Full error:', JSON.stringify(error))
+
     return NextResponse.json(
-      { error: errorMsg },
+      { 
+        error: errorMessage,
+        debug: process.env.NODE_ENV === 'development' ? error : undefined
+      },
       { status: 500 }
     )
   }
