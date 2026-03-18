@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import Stripe from 'stripe'
+import { stripe } from '@/lib/stripe'
 
 export async function POST(request: NextRequest) {
   try {
@@ -8,7 +8,6 @@ export async function POST(request: NextRequest) {
 
     console.log('[CHECKOUT] Request received', { priceId, productId })
 
-    // Validate inputs
     if (!priceId) {
       return NextResponse.json(
         { error: 'Price ID is required' },
@@ -16,28 +15,13 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    if (!process.env.STRIPE_SECRET_KEY) {
-      console.error('[CHECKOUT] STRIPE_SECRET_KEY not found')
-      return NextResponse.json(
-        { error: 'Server configuration error: Missing Stripe key' },
-        { status: 500 }
-      )
-    }
-
-    // Initialize Stripe with explicit configuration
-    console.log('[CHECKOUT] Initializing Stripe')
-    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-      apiVersion: '2023-10-16',
-    })
-
     // Get safe origin
     const protocol = request.headers.get('x-forwarded-proto') || 'https'
     const host = request.headers.get('host') || request.headers.get('x-forwarded-host') || 'synth-labs-sigma.vercel.app'
     const origin = `${protocol}://${host}`
 
-    console.log('[CHECKOUT] Creating session', { origin, priceId })
+    console.log('[CHECKOUT] Creating session for', { origin, priceId })
 
-    // Create the checkout session
     const session = await stripe.checkout.sessions.create({
       line_items: [
         {
@@ -53,20 +37,14 @@ export async function POST(request: NextRequest) {
       },
     })
 
-    console.log('[CHECKOUT] Session created successfully', { sessionId: session.id })
-
+    console.log('[CHECKOUT] SUCCESS', { sessionId: session.id })
     return NextResponse.json({ sessionId: session.id })
 
   } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : String(error)
-    console.error('[CHECKOUT] Error:', errorMessage)
-    console.error('[CHECKOUT] Full error:', JSON.stringify(error))
-
+    const msg = error instanceof Error ? error.message : String(error)
+    console.error('[CHECKOUT] FAILED:', msg)
     return NextResponse.json(
-      { 
-        error: errorMessage,
-        debug: process.env.NODE_ENV === 'development' ? error : undefined
-      },
+      { error: msg },
       { status: 500 }
     )
   }
