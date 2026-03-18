@@ -1,46 +1,46 @@
 'use client'
 
 import { useSearchParams } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+import React from 'react'
 import styles from './thank-you.module.css'
 
 export default function ThankYouPage() {
   const searchParams = useSearchParams()
   const sessionId = searchParams.get('session_id')
-  const productId = searchParams.get('product')
   const [loading, setLoading] = useState(true)
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (!sessionId) {
       setError('Invalid session')
       setLoading(false)
       return
     }
 
-    const verifyPayment = async () => {
-      try {
-        const response = await fetch('/api/verify-payment', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ sessionId }),
-        })
-
-        if (response.ok) {
-          setSuccess(true)
-        } else {
-          setError('Failed to verify payment')
-        }
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'An error occurred')
-      } finally {
-        setLoading(false)
-      }
-    }
-
     verifyPayment()
   }, [sessionId])
+
+  const verifyPayment = async () => {
+    try {
+      const response = await fetch('/api/verify-payment', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sessionId }),
+      })
+
+      if (response.ok) {
+        setSuccess(true)
+      } else {
+        setError('Failed to verify payment')
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'An error occurred')
+    } finally {
+      setLoading(false)
+    }
+  }
 
   if (loading) {
     return (

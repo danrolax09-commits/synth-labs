@@ -1,7 +1,5 @@
 'use client'
 
-import { useState } from 'react'
-import Link from 'next/link'
 import styles from './page.module.css'
 
 const products = [
@@ -50,7 +48,6 @@ const products = [
 ]
 
 export default function Home() {
-  const [selectedProduct, setSelectedProduct] = useState<string | null>(null)
 
   return (
     <>

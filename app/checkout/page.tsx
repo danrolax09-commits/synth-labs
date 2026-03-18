@@ -1,7 +1,7 @@
 'use client'
 
 import { useSearchParams } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { loadStripe } from '@stripe/stripe-js'
 import styles from './checkout.module.css'
 
