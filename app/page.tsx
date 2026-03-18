@@ -168,9 +168,9 @@ export default function Home() {
         <div className={styles.container}>
           <p>&copy; 2026 Synth Labs. All rights reserved.</p>
           <div className={styles.footerLinks}>
-            <a href="#">Privacy</a>
-            <a href="#">Terms</a>
-            <a href="#">Contact</a>
+            <a href="/privacy">Privacy</a>
+            <a href="/terms">Terms</a>
+            <a href="/contact">Contact</a>
           </div>
         </div>
       </footer>
