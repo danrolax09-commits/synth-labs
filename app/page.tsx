@@ -1,4 +1,5 @@
 'use client'
+import { STRIPE_PRICES, PRICING_TIERS } from '@/lib/pricing-config';
 
 import styles from './page.module.css'
 
