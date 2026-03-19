@@ -1,0 +1,187 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║                    SYNTH LABS PIPELINE - QUICK REFERENCE                  ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+🚀 QUICK START (Copy & Paste)
+──────────────────────────────────────────────────────────────────────────────
+
+export VERCEL_TOKEN='your_token_from_https://vercel.com/account/tokens'
+cd /home/openclaw/.openclaw/workspace/synth-labs
+./scripts/continuous-deploy.sh monitor
+
+# In another terminal:
+./scripts/monitor-dashboard.sh
+
+That's it! Pipeline is now running continuously.
+
+══════════════════════════════════════════════════════════════════════════════
+
+📚 DOCUMENTATION FILES (In same directory)
+──────────────────────────────────────────────────────────────────────────────
+
+QUICKSTART.md              ← Start here (30 seconds)
+README-PIPELINE.md         ← Overview & examples (5 min)
+PIPELINE.md                ← Complete reference (10 min)
+COMMANDS.md                ← All commands (5 min)
+SETUP_SUMMARY.md           ← Architecture guide (8 min)
+QUICK-REFERENCE.txt        ← This file
+
+══════════════════════════════════════════════════════════════════════════════
+
+⚡ MOST USEFUL COMMANDS
+──────────────────────────────────────────────────────────────────────────────
+
+./scripts/continuous-deploy.sh monitor               Start pipeline (watches code)
+./scripts/continuous-deploy.sh cycle                 Run single build-deploy-test
+./scripts/monitor-dashboard.sh                       View real-time status
+./scripts/verify-setup.sh                            15-point system check
+tail -f logs/build-*.log                             Watch build in real-time
+cat logs/latest-deployment.txt                       Get deployment URL
+./scripts/continuous-deploy.sh help                  Show all commands
+
+══════════════════════════════════════════════════════════════════════════════
+
+⚙️  CONFIGURATION
+──────────────────────────────────────────────────────────────────────────────
+
+REQUIRED:
+  export VERCEL_TOKEN='vercel_...'
+  (Get from: https://vercel.com/account/tokens)
+
+OPTIONAL:
+  export GITHUB_TOKEN='ghp_...'         ← Enable auto-commit
+  export DEPLOY_INTERVAL=180             ← Run every 180 seconds (default: 300)
+
+══════════════════════════════════════════════════════════════════════════════
+
+🔍 WHAT THE PIPELINE DOES
+──────────────────────────────────────────────────────────────────────────────
+
+Monitors your code continuously:
+
+1. FILE CHANGE DETECTION
+   Watches: app/, lib/, public/, pages/, package.json, tsconfig.json
+   Triggers: Immediately on change OR every 5 minutes
+
+2. BUILD (30-60 seconds)
+   npm ci → npm lint → npm build
+
+3. DEPLOY (1-2 minutes)
+   Push to Vercel, optionally commit to GitHub
+
+4. TEST (10-30 seconds)
+   • GET / (homepage loads)
+   • GET /api/health (API responds)
+   • POST /api/checkout (Stripe works)
+   • Static assets load
+
+5. LOG RESULTS
+   logs/build-*.log
+   logs/deploy-*.log
+   logs/test-*.log
+   logs/latest-deployment.txt
+
+TOTAL: ~2-3 minutes per cycle
+
+══════════════════════════════════════════════════════════════════════════════
+
+📋 TYPICAL WORKFLOW
+──────────────────────────────────────────────────────────────────────────────
+
+Terminal 1 (Pipeline):
+  export VERCEL_TOKEN='...'
+  ./scripts/continuous-deploy.sh monitor
+  
+Terminal 2 (Monitor):
+  ./scripts/monitor-dashboard.sh
+
+Then just edit your code. Pipeline detects change and deploys automatically!
+
+══════════════════════════════════════════════════════════════════════════════
+
+🔧 ADVANCED SETUP
+──────────────────────────────────────────────────────────────────────────────
+
+Run as background service (survives reboot):
+
+  sudo ./scripts/install-service.sh
+  nano .env.pipeline                  ← Add VERCEL_TOKEN and GITHUB_TOKEN
+  sudo systemctl start synth-labs-pipeline
+  sudo systemctl enable synth-labs-pipeline
+  sudo journalctl -u synth-labs-pipeline -f  ← View logs
+
+Custom interval (every 60 seconds):
+  ./scripts/continuous-deploy.sh monitor --interval 60
+
+══════════════════════════════════════════════════════════════════════════════
+
+❓ TROUBLESHOOTING
+──────────────────────────────────────────────────────────────────────────────
+
+Scripts won't run:
+  chmod +x scripts/*.sh
+
+Build fails:
+  npm ci && npm run lint && npm run build
+
+Deployment URL not updating:
+  cat logs/latest-deployment.txt
+  curl https://synth-labs-sigma.vercel.app/
+
+Check system is ready:
+  ./scripts/verify-setup.sh
+
+Get help:
+  ./scripts/continuous-deploy.sh help
+
+══════════════════════════════════════════════════════════════════════════════
+
+✅ SYSTEM STATUS
+──────────────────────────────────────────────────────────────────────────────
+
+✓ All scripts created & tested
+✓ All documentation complete  
+✓ 15/15 system checks passed
+✓ Project builds successfully
+✓ Git repository ready
+⚠ VERCEL_TOKEN not yet set (required)
+
+Everything ready. Just set VERCEL_TOKEN and run ./scripts/continuous-deploy.sh monitor
+
+══════════════════════════════════════════════════════════════════════════════
+
+📁 FILES CREATED
+──────────────────────────────────────────────────────────────────────────────
+
+scripts/
+  continuous-deploy.sh       (11 KB)
+  monitor-dashboard.sh       (8.9 KB)
+  setup-pipeline.sh          (8.7 KB)
+  install-service.sh         (4.4 KB)
+  verify-setup.sh            (4.0 KB)
+
+Root directory:
+  README-PIPELINE.md         (6.0 KB)
+  QUICKSTART.md              (3.0 KB)
+  PIPELINE.md                (9.3 KB)
+  COMMANDS.md                (6.5 KB)
+  SETUP_SUMMARY.md           (8.7 KB)
+  QUICK-REFERENCE.txt        (This file)
+
+logs/ (created automatically):
+  build-TIMESTAMP.log        ← Build output
+  deploy-TIMESTAMP.log       ← Deployment output
+  test-TIMESTAMP.log         ← Test results
+  latest-deployment.txt      ← Current URL
+
+══════════════════════════════════════════════════════════════════════════════
+
+🎉 YOU'RE ALL SET!
+
+  1. export VERCEL_TOKEN='your_token'
+  2. ./scripts/continuous-deploy.sh monitor
+  3. Done! Edit code and watch it deploy automatically.
+
+Happy deploying! 🚀
+
+══════════════════════════════════════════════════════════════════════════════

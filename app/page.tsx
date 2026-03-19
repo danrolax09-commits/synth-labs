@@ -58,7 +58,7 @@ export default function Home() {
             Synth<span>Labs</span>
           </div>
           <nav>
-            <a href="#products">Products</a>
+            <a href="/products">All Products</a>
             <a href="#features">Features</a>
             <a href="#pricing">Pricing</a>
           </nav>
@@ -168,9 +168,9 @@ export default function Home() {
         <div className={styles.container}>
           <p>&copy; 2026 Synth Labs. All rights reserved.</p>
           <div className={styles.footerLinks}>
-            <a href="/privacy">Privacy</a>
-            <a href="/terms">Terms</a>
-            <a href="/contact">Contact</a>
+            <a href="#" onClick={(e) => { e.preventDefault(); alert('Privacy Policy'); }}>Privacy</a>
+            <a href="#" onClick={(e) => { e.preventDefault(); alert('Terms of Service'); }}>Terms</a>
+            <a href="#" onClick={(e) => { e.preventDefault(); alert('Contact: support@synthlabs.io'); }}>Contact</a>
           </div>
         </div>
       </footer>
