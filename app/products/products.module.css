@@ -1,0 +1,306 @@
+.header {
+  background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+  padding: 1.5rem 0;
+  border-bottom: 1px solid #374151;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+  text-decoration: none;
+  letter-spacing: -0.5px;
+}
+
+.logo span {
+  background: linear-gradient(135deg, #6366f1, #ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.nav nav {
+  display: flex;
+  gap: 2rem;
+}
+
+.nav a {
+  color: #9ca3af;
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: color 0.2s;
+}
+
+.nav a:hover,
+.nav a.active {
+  color: #fff;
+}
+
+.hero {
+  background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+  padding: 4rem 2rem;
+  text-align: center;
+  border-bottom: 1px solid #374151;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 1rem 0;
+}
+
+.hero p {
+  font-size: 1.125rem;
+  color: #9ca3af;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.products {
+  padding: 4rem 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.productCard {
+  background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+  border: 1px solid #374151;
+  border-radius: 12px;
+  padding: 2rem;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.productCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--accent-color, #6366f1);
+}
+
+.productCard:hover {
+  border-color: var(--accent-color, #6366f1);
+  background: linear-gradient(135deg, #374151 0%, #1f2937 100%);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(99, 102, 241, 0.1);
+}
+
+.icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.category {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--accent-color, #6366f1);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.productCard h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0.5rem 0 1rem 0;
+}
+
+.productCard p {
+  font-size: 0.95rem;
+  color: #9ca3af;
+  margin: 0 0 1.5rem 0;
+  line-height: 1.5;
+}
+
+.pricing {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin: 1rem 0;
+}
+
+.pricing span {
+  background: rgba(99, 102, 241, 0.1);
+  color: #c7d2fe;
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.cta {
+  font-size: 0.9rem;
+  color: var(--accent-color, #6366f1);
+  font-weight: 600;
+  margin-top: 1rem;
+}
+
+.productCard:hover .cta {
+  color: #fff;
+}
+
+.combined {
+  background: linear-gradient(135deg, #6366f1 0%, #ec4899 100%);
+  padding: 4rem 0;
+}
+
+.bundleCard {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+  padding: 3rem;
+  color: #000;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.bundleCard h3 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+}
+
+.bundleCard p {
+  font-size: 1rem;
+  color: #666;
+  margin: 0 0 1.5rem 0;
+}
+
+.bundleCard ul {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0;
+}
+
+.bundleCard li {
+  padding: 0.5rem 0;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.bundleCard li::before {
+  content: '✓ ';
+  color: #10b981;
+  font-weight: 700;
+  margin-right: 0.5rem;
+}
+
+.bundlePrice {
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.original {
+  font-size: 0.9rem;
+  color: #999;
+  text-decoration: line-through;
+}
+
+.price {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #6366f1;
+}
+
+.btn {
+  background: #6366f1;
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background 0.2s;
+  display: inline-block;
+  margin-left: auto;
+}
+
+.btn:hover {
+  background: #4f46e5;
+}
+
+.footer {
+  background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+  padding: 2rem;
+  border-top: 1px solid #374151;
+  text-align: center;
+  color: #9ca3af;
+  font-size: 0.9rem;
+}
+
+.footerLinks {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+.footerLinks a {
+  color: #9ca3af;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footerLinks a:hover {
+  color: #fff;
+}
+
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  .nav nav {
+    gap: 1rem;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .bundleCard {
+    padding: 2rem;
+  }
+
+  .bundlePrice {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .btn {
+    margin-left: 0;
+    width: 100%;
+    text-align: center;
+  }
+}
